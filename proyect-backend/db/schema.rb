@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_09_181713) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_09_183438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,29 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_09_181713) do
     t.integer "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "invoice_number"
+    t.integer "payment_method"
+    t.bigint "order_id", null: false
+    t.string "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_invoices_on_client_id"
+    t.index ["order_id"], name: "index_invoices_on_order_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer "quantity"
+    t.decimal "unit_price"
+    t.decimal "subtotal"
+    t.bigint "product_id", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_items_on_order_id"
+    t.index ["product_id"], name: "index_items_on_product_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -65,6 +88,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_09_181713) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "invoices", "clients"
+  add_foreign_key "invoices", "orders"
+  add_foreign_key "items", "orders"
+  add_foreign_key "items", "products"
   add_foreign_key "orders", "employees"
   add_foreign_key "orders", "tables"
 end
