@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_09_183438) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_10_040811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,8 +59,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_09_183438) do
     t.index ["product_id"], name: "index_items_on_product_id"
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.bigint "order_number"
+  create_table "orders", primary_key: "order_number", id: :bigint, default: -> { "nextval('orders_id_seq'::regclass)" }, force: :cascade do |t|
     t.date "date"
     t.integer "status"
     t.decimal "total"
@@ -81,7 +80,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_09_183438) do
     t.string "description"
   end
 
-
   create_table "tables", force: :cascade do |t|
     t.string "status"
     t.integer "capacity"
@@ -90,8 +88,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_09_183438) do
   end
 
   add_foreign_key "invoices", "clients"
-  add_foreign_key "invoices", "orders"
-  add_foreign_key "items", "orders"
+  add_foreign_key "invoices", "orders", primary_key: "order_number"
+  add_foreign_key "items", "orders", primary_key: "order_number"
   add_foreign_key "items", "products"
   add_foreign_key "orders", "employees"
   add_foreign_key "orders", "tables"
