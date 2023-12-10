@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_09_183438) do
     t.string "description"
   end
 
+
   create_table "tables", force: :cascade do |t|
     t.string "status"
     t.integer "capacity"
