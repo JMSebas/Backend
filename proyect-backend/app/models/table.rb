@@ -1,5 +1,5 @@
 class Table < ApplicationRecord
     has_many :orders
 
-    enum status: {occupied: 2, free: 1}
+    enum status: {free: 1, occupied: 2}
 end
