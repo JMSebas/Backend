@@ -5,7 +5,6 @@
       username: Faker::Internet.user_name,
       password: Faker::Internet.password,
       email: Faker::Internet.email,
-      encrypted_password: Devise.friendly_token,
       role: Faker::Number.between(from: 1, to: 3)
       
     )

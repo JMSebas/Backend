@@ -13,7 +13,7 @@ class Employees::RegistrationsController < Devise::RegistrationsController
   def respond_with(data, _options={})
   if data.persisted?
     render json: {
-      status: {code: 200, message: 'Inicio exitoso', datas: data}
+      status: {code: 200, message: 'Registro exitoso', datas: data}
     }
   else 
     render json: {
