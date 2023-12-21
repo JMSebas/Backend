@@ -38,6 +38,8 @@ gem "bootsnap", require: false
 group :development, :test do
   gem "devise", "~> 4.9"
   gem 'devise-jwt'
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem "debug", platforms: %i[ mri windows ]
 end
 
