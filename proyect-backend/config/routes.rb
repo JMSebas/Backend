@@ -1,12 +1,5 @@
 Rails.application.routes.draw do
-  # devise_for :employees
-  resources :invoices
-  resources :items
-  resources :orders
-  resources :employees
-  resources :tables
-  resources :products
-  resources :clients
+ 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -17,6 +10,21 @@ Rails.application.routes.draw do
     sessions: 'employees/sessions'
   }
 
+  # devise_scope :employee do
+  #   delete 'employees/sign_out', to: 'employees/sessions#destroy'
+  # end
+
+  namespace :api do
+    namespace :v1 do
+      resources :invoices
+      resources :items
+      resources :orders
+      resources :employees
+      resources :tables
+      resources :products
+      resources :clients
+    end
+  end 
   # Defines the root path route ("/")
   # root "posts#index"
 end

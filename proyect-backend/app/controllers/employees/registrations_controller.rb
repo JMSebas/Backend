@@ -17,7 +17,7 @@ class Employees::RegistrationsController < Devise::RegistrationsController
     }
   else 
     render json: {
-      status: { message: 'Ingreso no exitoso', errors: resource.errors.full_messages }
+      status: { message: 'Registro no exitoso', errors: resource.errors.full_messages }
     }
   end  
   end

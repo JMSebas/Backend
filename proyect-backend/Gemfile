@@ -36,10 +36,11 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 group :development, :test do
-  gem "devise", "~> 4.9"
+  gem "devise"
   gem 'devise-jwt'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'rack-cors'
   gem "debug", platforms: %i[ mri windows ]
 end
 
