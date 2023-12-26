@@ -1,7 +1,6 @@
 class Order < ApplicationRecord
   before_save :calculate_total
 
-  
   has_many :items
   has_many :products, through: :items
   has_one :invoices

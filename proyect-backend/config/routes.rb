@@ -20,7 +20,12 @@ Rails.application.routes.draw do
       resources :items
       resources :orders
       resources :employees
-      resources :tables
+      # resources :tables
+      resources :tables do
+        member do
+          put 'occupy_table', to: 'tables#occupy_table'
+        end
+      end
       resources :products
       resources :clients
     end
