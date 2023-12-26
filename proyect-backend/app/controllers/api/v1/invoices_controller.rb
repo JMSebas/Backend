@@ -20,7 +20,7 @@ module Api
         @invoice = Invoice.new(invoice_params)
 
         if @invoice.save
-          render json: @invoice, status: :created, location: @invoice
+          render json: @invoice, status: :created #, location: @invoice
         else
           render json: @invoice.errors, status: :unprocessable_entity
         end

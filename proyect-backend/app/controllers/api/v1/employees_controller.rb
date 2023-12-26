@@ -22,7 +22,7 @@ module Api
         @employee = Employee.new(employee_params)
 
         if @employee.save
-          render json: @employee, status: :created, location: @employee
+          render json: @employee, status: :created #, location: @employee
         else
           render json: @employee.errors, status: :unprocessable_entity
         end
