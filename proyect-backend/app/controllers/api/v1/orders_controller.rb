@@ -12,7 +12,16 @@ module Api
 
       
       def show
-        render json: @order
+        render json: {
+          order: @order.as_json,
+          items: @order.items.map do |item|
+            {
+              quantity: item.quantity,
+              # subtotal: item.subtotal,
+              product: item.product.as_json(only: %i[id name description]) # Ajusta según los atributos que desees mostrar
+            }
+          end
+        }
       end
 
       
@@ -20,7 +29,7 @@ module Api
         @order = Order.new(order_params)
         
         if @order.save
-          render json: @order, status: :created, location: @order
+          render json: @order, status: :created#, location: api_v1_order_url(@order)
         else
           render json: @order.errors, status: :unprocessable_entity
         end
@@ -44,7 +53,7 @@ module Api
       end
 
       def order_params
-        params.require(:order).permit( :date, :status, :total, :table_id, :employee_id, items: [:quantity, :unit_price,  :product_id])
+        params.require(:order).permit( :date, :status,  :table_id, :employee_id, items_attributes: [:quantity, :product_id])
        end
     end
   end

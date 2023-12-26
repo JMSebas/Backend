@@ -1,10 +1,12 @@
 class Item < ApplicationRecord
+  validates :subtotal, presence: true
+
   belongs_to :product
   belongs_to :order
 
-  before_save :calculate_subtotal
+  before_validation :calculate_subtotal
   
   def calculate_subtotal
-    self.subtotal = unit_price * quantity
+    self.subtotal = product.price * quantity
   end
 end
