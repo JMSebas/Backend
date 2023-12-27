@@ -24,9 +24,11 @@ module Api
         }
       end
 
+     
+
       
       def create
-        @order = Order.new(order_params)
+        @order = Order.new(order_params.merge(status: "in_process"))
         
         if @order.save
           render json: @order, status: :created#, location: api_v1_order_url(@order)
@@ -43,6 +45,22 @@ module Api
         end
       end
 
+      def set_ready
+        if @order.update(status: 'ready')
+          render json: @order
+        else
+          render json: @order.errors, status: :unprocessable_entity
+        end
+      end
+
+      def set_finished
+        if @order.update(status: 'finished')
+          render json: @order
+        else
+          render json: @order.errors, status: :unprocessable_entity
+        end
+      end
+
       def destroy
         @order.destroy!
       end
@@ -53,7 +71,7 @@ module Api
       end
 
       def order_params
-        params.require(:order).permit( :date, :status,  :table_id, :employee_id, items_attributes: [:quantity, :product_id])
+        params.require(:order).permit( :date, :table_id, :employee_id, items_attributes: [:quantity, :product_id])
        end
     end
   end

@@ -25,7 +25,7 @@ class Employees::SessionsController < Devise::SessionsController
     current_employee = Employee.find(jwt_payload['sub'])
     if current_employee
       render json: {
-        status: { code: 200, message: 'User signed out successfully' }
+        status: { code: 200, message: 'Employee signed out successfully' }
       }
     else
       render json: {
