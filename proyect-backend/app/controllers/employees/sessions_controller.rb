@@ -10,7 +10,7 @@ class Employees::SessionsController < Devise::SessionsController
  
 
     render json: {
-      status: { code: 200, message: 'Ingreso exitoso', data: { email: current_employee.email, first_name: 
+      status: { code: 200, message: 'Ingreso exitoso', data: { id: current_employee.id, email: current_employee.email, first_name: 
         current_employee.first_name, last_name: current_employee.last_name, role: current_employee.role, username: current_employee.username } 
       }
     }
