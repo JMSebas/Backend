@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # devise_scope :employee do
   #   delete 'employees/sign_out', to: 'employees/sessions#destroy'
   # end
-
+  mount ActionCable.server => '/order'
   namespace :api do
     namespace :v1 do
       resources :invoices
