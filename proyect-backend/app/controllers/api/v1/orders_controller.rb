@@ -5,8 +5,18 @@ module Api
 
       
       def index
-        @orders = Order.all
-
+        @orders = Order.all.map do |order|
+          {
+            order: order.as_json,
+            items: order.items.map do |item|
+              {
+                quantity: item.quantity,
+                product: item.product.as_json(only: %i[id name description])
+              }
+            end
+          }
+        end
+      
         render json: @orders
       end
 
