@@ -28,7 +28,7 @@ module Api
             {
               quantity: item.quantity,
               # subtotal: item.subtotal,
-              product: item.product.as_json(only: %i[id name description]) # Ajusta según los atributos que desees mostrar
+              product: item.product.as_json(only: %i[id name description]) 
             }
           end
         }
@@ -41,7 +41,6 @@ module Api
         @order = Order.new(order_params.merge(status: "in_process"))
         
         if @order.save
-          # OrderChannel.broadcast_to("orders", { action: "created", order: @order })
           render json: @order, status: :created#, location: api_v1_order_url(@order)
         else
           render json: @order.errors, status: :unprocessable_entity
@@ -50,8 +49,6 @@ module Api
 
       def update
         if @order.update(order_params)
-          # OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
-
           render json: @order
         else
           render json: @order.errors, status: :unprocessable_entity
@@ -61,7 +58,6 @@ module Api
       def set_ready
         @order = Order.find(params[:id])
         if @order.update(status: 'ready')
-          # OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
           render json: @order
         else
           render json: @order.errors, status: :unprocessable_entity
@@ -71,7 +67,6 @@ module Api
       def set_finished
         @order = Order.find(params[:id])
         if @order.update(status: 'finish')
-          # OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
           render json: @order
         else
           render json: @order.errors, status: :unprocessable_entity

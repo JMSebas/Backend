@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
   # include ActionCable::Broadcasting
-    before_action :authenticate_employee!
+    # before_action :authenticate_employee!
 
   private
 

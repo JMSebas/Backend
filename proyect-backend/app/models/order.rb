@@ -1,5 +1,7 @@
 class Order < ApplicationRecord
   before_save :calculate_total
+  after_create_commit { broadcast_message }
+  after_update_commit { update_message }
 
   has_many :items, dependent: :destroy
   has_many :products, through: :items
@@ -9,7 +11,15 @@ class Order < ApplicationRecord
 
   enum status: { in_process: 1, ready: 2, finish: 3 } 
 
+  def update_message
+    ActionCable.server.broadcast("OrderChannel", { action: "updated", order: self })
+
+  end
   
+  def broadcast_message
+    ActionCable.server.broadcast("OrderChannel", { action: "created", order: self })
+  end
+
   def calculate_total
     self.total = items.present? ? items.sum(&:subtotal) : 0
   end
