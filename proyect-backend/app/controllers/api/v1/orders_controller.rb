@@ -41,7 +41,7 @@ module Api
         @order = Order.new(order_params.merge(status: "in_process"))
         
         if @order.save
-          OrderChannel.broadcast_to("orders", { action: "created", order: @order })
+          # OrderChannel.broadcast_to("orders", { action: "created", order: @order })
           render json: @order, status: :created#, location: api_v1_order_url(@order)
         else
           render json: @order.errors, status: :unprocessable_entity
@@ -50,7 +50,7 @@ module Api
 
       def update
         if @order.update(order_params)
-          OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
+          # OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
 
           render json: @order
         else
@@ -59,8 +59,9 @@ module Api
       end
 
       def set_ready
+        @order = Order.find(params[:id])
         if @order.update(status: 'ready')
-          OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
+          # OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
           render json: @order
         else
           render json: @order.errors, status: :unprocessable_entity
@@ -68,8 +69,9 @@ module Api
       end
 
       def set_finished
-        if @order.update(status: 'finished')
-          OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
+        @order = Order.find(params[:id])
+        if @order.update(status: 'finish')
+          # OrderChannel.broadcast_to("orders", { action: "updated", order: @order })
           render json: @order
         else
           render json: @order.errors, status: :unprocessable_entity
@@ -77,7 +79,7 @@ module Api
       end
 
       def destroy
-        @order.destroy!
+        render json: @order.destroy!
       end
 
       private

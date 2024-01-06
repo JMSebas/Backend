@@ -4,5 +4,5 @@ class Product < ApplicationRecord
     
 
 
-    enum category: {ensalada: 1, pizza: 2, hamburguesa: 3, bebidas: 4, gaseosas: 5}
+    enum category: {ensalada: 1, pizza: 2, hamburguesa: 3, gaseosas: 4, jugos: 5}
 end

@@ -41,6 +41,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rack-cors'
+  gem 'redis'
   gem "debug", platforms: %i[ mri windows ]
 end
 

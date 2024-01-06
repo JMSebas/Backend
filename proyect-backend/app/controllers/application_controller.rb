@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  # include ActionCable::Broadcasting
     before_action :authenticate_employee!
 
   private
@@ -15,7 +16,7 @@ class ApplicationController < ActionController::API
         current_employee.update_column(:authentication_token, nil)
 
         render json: {
-          status: { code: 200, message: 'Employee signed out successfully' }
+          status: { code: 200, message: 'Employees signed out successfully' }
         }
       else
         render json: {
