@@ -4,6 +4,8 @@ class Item < ApplicationRecord
   belongs_to :product
   belongs_to :order
 
+  enum status: { pending: 1, finished: 2 }
+  
   before_validation :calculate_subtotal
   
   def calculate_subtotal

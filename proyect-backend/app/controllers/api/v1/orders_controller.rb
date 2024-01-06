@@ -11,6 +11,7 @@ module Api
             items: order.items.map do |item|
               {
                 quantity: item.quantity,
+                 status: item.status, #//pending, finished Descomentar y eliminar esto si se quiere traer en orders el status de los items
                 product: item.product.as_json(only: %i[id name description])
               }
             end
@@ -27,7 +28,7 @@ module Api
           items: @order.items.map do |item|
             {
               quantity: item.quantity,
-              # subtotal: item.subtotal,
+              status: item.status, # //pending, finished Descomentar y eliminar esto si se quiere traer en orders el status de los items
               product: item.product.as_json(only: %i[id name description]) 
             }
           end
@@ -39,7 +40,10 @@ module Api
       
       def create
         @order = Order.new(order_params.merge(status: "in_process"))
-        
+        @order.items.each do |item|
+          item.status = 'pending'
+        end
+
         if @order.save
           render json: @order, status: :created#, location: api_v1_order_url(@order)
         else

@@ -26,7 +26,15 @@ module Api
         end
       end
 
-      
+      def update_status
+        @item = Item.find(params[:id])
+        if @item.update(status: 'finished')
+          render json: @item
+        else
+          render json: @item.errors, status: :unprocessable_entity
+        end
+      end
+
       def update
         if @item.update(item_params)
           render json: @item

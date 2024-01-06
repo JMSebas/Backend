@@ -19,17 +19,26 @@ Rails.application.routes.draw do
       resources :invoices
       resources :items
       resources :employees
-      # resources :orders
-      # resources :tables
+      resources :orders
+      resources :tables
+
       resources :tables do
         member do
-          put 'occupy_table', to: 'tables#occupy_table'
+          put 'MesaOcupada', to: 'tables#occupy_table'
         end
       end
+
+      resources :items do 
+        member do
+          put 'ActualizarEstado', to: 'items#update_status'
+        end
+      end  
+
+
       resources :orders do
         member do 
-          put 'set_ready', to: 'orders#set_ready'
-          put 'set_finished', to: 'orders#set_finished'
+          put 'OrdenLista', to: 'orders#set_ready'
+          put 'OrdenFinalizada', to: 'orders#set_finished'
         end
       end
       resources :products
