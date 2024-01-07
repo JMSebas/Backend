@@ -11,6 +11,11 @@ class Order < ApplicationRecord
 
   enum status: { in_process: 1, ready: 2, finish: 3 } 
 
+  belongs_to :table
+  belongs_to :employee
+  
+  private 
+
   def update_message
     ActionCable.server.broadcast("OrderChannel", { action: "updated", order: self })
 
@@ -24,6 +29,5 @@ class Order < ApplicationRecord
     self.total = items.present? ? items.sum(&:subtotal) : 0
   end
 
-  belongs_to :table
-  belongs_to :employee
+  
 end
