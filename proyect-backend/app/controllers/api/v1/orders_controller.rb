@@ -10,6 +10,7 @@ module Api
             order: order.as_json,
             items: order.items.map do |item|
               {
+                id: item.id,
                 quantity: item.quantity,
                  status: item.status, #//pending, finished Descomentar y eliminar esto si se quiere traer en orders el status de los items
                 product: item.product.as_json(only: %i[id name description])
@@ -27,6 +28,7 @@ module Api
           order: @order.as_json,
           items: @order.items.map do |item|
             {
+              id: item.id,
               quantity: item.quantity,
               status: item.status, # //pending, finished Descomentar y eliminar esto si se quiere traer en orders el status de los items
               product: item.product.as_json(only: %i[id name description]) 
@@ -76,6 +78,41 @@ module Api
           render json: @order.errors, status: :unprocessable_entity
         end
       end
+
+     
+      def add_item
+        @order = Order.find(params[:id])
+    
+        items_params = params.require(:items_attributes).map do |item|
+        item.permit(:quantity, :product_id).merge(status: 'pending')
+        end
+    
+        @order.items.create(items_params)
+        @order.calculate_total
+    
+        if @order.save
+          render json: @order, status: :created
+        else
+          render json: @order.errors, status: :unprocessable_entity
+        end
+      end
+
+
+      def remove_item
+        @order = Order.find(params[:id])
+        @item = @order.items.find(params[:item_id])
+        
+        if @item.destroy
+          @order.calculate_total
+          @order.save
+      
+          render json: @order
+        else
+          render json: { error: 'No se pudo eliminar el ítem de la orden' }, status: :unprocessable_entity
+        end
+      end
+      
+
 
       def destroy
         render json: @order.destroy!

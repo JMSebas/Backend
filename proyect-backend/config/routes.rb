@@ -39,8 +39,11 @@ Rails.application.routes.draw do
         member do 
           put 'OrdenLista', to: 'orders#set_ready'
           put 'OrdenFinalizada', to: 'orders#set_finished'
+          post 'AgregarItem', to: 'orders#add_item'
+        delete 'EliminarItem/:item_id', to: 'orders#remove_item', as: 'EliminarItem'
         end
       end
+
       resources :products
       resources :clients
     end
