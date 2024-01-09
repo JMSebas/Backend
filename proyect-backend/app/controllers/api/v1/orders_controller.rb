@@ -83,10 +83,14 @@ module Api
       def add_item
         @order = Order.find(params[:id])
     
+        if @order.status == 'ready'
+          @order.update(status: 'in_process')
+        end
+        
         items_params = params.require(:items_attributes).map do |item|
         item.permit(:quantity, :product_id).merge(status: 'pending')
         end
-    
+        
         @order.items.create(items_params)
         @order.calculate_total
     

@@ -16,16 +16,15 @@ module Api
       end
 
       def occupy_table
-        # Encuentra la mesa por su ID (puedes ajustar esto según tus necesidades)
         @table = Table.find(params[:id])
         if @table.status == "free"
           @table.update(status: "occupied")
         else
           @table.update(status: "free")  
         end 
-        # Guarda los cambios en la base de datos
+        
         if @table.save
-          render json: { message: "La mesa ha sido marcada como ocupada." }
+          render json: { table: @table, message: "La mesa ha cambiado de estado." }
         else
           render json: { error: "Hubo un problema al cambiar el estado de la mesa." }, status: :unprocessable_entity
         end
