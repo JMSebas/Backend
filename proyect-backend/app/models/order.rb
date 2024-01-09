@@ -14,7 +14,7 @@ class Order < ApplicationRecord
   belongs_to :table
   belongs_to :employee
   
-  private 
+  
 
   def update_message
     ActionCable.server.broadcast("OrderChannel", { action: "updated", order: self })
