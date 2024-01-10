@@ -9,7 +9,7 @@ class Order < ApplicationRecord
   accepts_nested_attributes_for :items, allow_destroy: true
 
 
-  enum status: { in_process: 1, ready: 2, finish: 3 } 
+  enum status: { in_process: 1, ready: 2, finish: 3, billed: 4 } 
 
   belongs_to :table
   belongs_to :employee

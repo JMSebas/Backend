@@ -12,8 +12,9 @@ module Api
               {
                 id: item.id,
                 quantity: item.quantity,
+                subtotal: item.subtotal,
                  status: item.status, #//pending, finished Descomentar y eliminar esto si se quiere traer en orders el status de los items
-                product: item.product.as_json(only: %i[id name description])
+                product: item.product.as_json(only: %i[id name description price])
               }
             end
           }
@@ -30,8 +31,9 @@ module Api
             {
               id: item.id,
               quantity: item.quantity,
+              subtotal: item.subtotal,
               status: item.status, # //pending, finished Descomentar y eliminar esto si se quiere traer en orders el status de los items
-              product: item.product.as_json(only: %i[id name description]) 
+              product: item.product.as_json(only: %i[id name description price]) 
             }
           end
         }
