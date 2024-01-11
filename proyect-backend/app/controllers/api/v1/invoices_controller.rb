@@ -12,8 +12,24 @@ module Api
 
       
       def show
-        render json: @invoice
+        render json: {
+          invoice: @invoice.as_json,
+          order: {
+            subtotal: @invoice.order.total,
+            items: @invoice.order.items.map do |item|
+              {
+                quantity: item.quantity,
+                subtotal_item: item.subtotal,
+                product: {
+                  name: item.product.name,
+                  price: item.product.price
+                }
+              }
+            end
+          }
+        }
       end
+      
 
       
       def create

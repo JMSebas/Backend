@@ -81,6 +81,17 @@ module Api
         end
       end
 
+      
+      def set_billed
+        @order = Order.find(params[:id])
+        if @order.update(status: 'billed')
+          render json: @order
+        else
+          render json: @order.errors, status: :unprocessable_entity
+        end
+      end
+
+
      
       def add_item
         @order = Order.find(params[:id])
