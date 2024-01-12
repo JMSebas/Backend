@@ -1,7 +1,7 @@
 module Api
   module V1
     class EmployeesController < ApplicationController
-      before_action :authenticate_employee!
+      # before_action :authenticate_employee!
 
       before_action :set_employee, only: %i[ show update destroy ]
 
