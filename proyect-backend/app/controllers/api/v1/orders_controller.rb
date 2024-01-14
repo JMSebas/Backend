@@ -3,7 +3,7 @@ module Api
     class OrdersController < ApplicationController
       before_action :set_order, only: %i[ show update destroy ]
 
-      
+
       def index
         @orders = Order.all.map do |order|
           {

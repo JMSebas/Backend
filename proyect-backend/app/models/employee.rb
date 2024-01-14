@@ -7,7 +7,7 @@ class Employee < ApplicationRecord
 
     has_many :orders
 
-    enum role:  { waiter: 1, chef: 2, admin: 3 }
+    enum role:  { waiter: 1, chef: 2, admin: 3, cashier: 4 }
 
     def jwt_payload
          super 
